@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : properties.xml
+    Created on : May 3, 2011, 7:25 PM
+    Author     : evan
+    Description:
+        Purpose of the document follows.
+-->
+<properties>
+    <basePath id="path">~/</basePath>
+</properties>

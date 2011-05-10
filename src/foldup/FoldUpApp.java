@@ -10,8 +10,7 @@ import org.jdesktop.application.SingleFrameApplication;
 /**
  * The main class of the application.
  */
-public class FoldUpApp extends SingleFrameApplication {
-
+public class FoldUpApp extends SingleFrameApplication { 
     /**
      * At startup create and show the main frame of the application.
      */

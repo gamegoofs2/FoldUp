@@ -113,6 +113,7 @@ public class FoldUpView extends FrameView {
         createButton = new javax.swing.JButton();
         statusBar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        viewLog = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -156,6 +157,14 @@ public class FoldUpView extends FrameView {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
+        viewLog.setText(resourceMap.getString("viewLog.text")); // NOI18N
+        viewLog.setName("viewLog"); // NOI18N
+        viewLog.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewLogMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -170,31 +179,37 @@ public class FoldUpView extends FrameView {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(basePathText, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(statusBar))
-                        .addContainerGap(291, Short.MAX_VALUE))))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(61, 61, 61)
+                                .addComponent(jLabel2))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(viewLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(createButton, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)))))
+                    .addComponent(jLabel1)
+                    .addComponent(statusBar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(basePathLabel)
+                    .addComponent(basePathText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(basePathLabel)
-                            .addComponent(basePathText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(createButton))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(createButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(viewLog)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(statusBar)
                 .addContainerGap())
@@ -241,7 +256,7 @@ public class FoldUpView extends FrameView {
                 .addComponent(statusMessageLabel)
                 .addGap(48, 48, 48)
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                    .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
                         .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -270,7 +285,7 @@ public class FoldUpView extends FrameView {
         if(fileHandler.createDirectories(structTextPane.getText())) {
             statusBar.setText("Status: " + structTextPane.getText() + " was successfully created.");
             try {
-                fileHandler.logAction("Created: " + basePathText.getText() + structTextPane.getText());
+                fileHandler.logAction("Created: " + basePathText.getText() + structTextPane.getText(), "log.txt");
             }
             catch (IOException e) {
                 statusBar.setText(statusBar.getText() + " log failed.");
@@ -279,7 +294,7 @@ public class FoldUpView extends FrameView {
         else {
             statusBar.setText("Status: " + structTextPane.getText() + " failed to create.");
             try {
-                fileHandler.logAction("Failed: " + basePathText.getText() + structTextPane.getText());
+                fileHandler.logAction("Failed: " + basePathText.getText() + structTextPane.getText(), "log.txt");
             }
             catch (IOException e) {
                 statusBar.setText(statusBar.getText() + " log failed.");
@@ -287,6 +302,15 @@ public class FoldUpView extends FrameView {
         }
         
     }//GEN-LAST:event_createButtonMouseClicked
+
+    private void viewLogMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewLogMouseClicked
+       if (logViewer == null) {
+            JFrame mainFrame = FoldUpApp.getApplication().getMainFrame();
+            logViewer = new viewLog(mainFrame);
+            logViewer.setLocationRelativeTo(mainFrame);
+        }
+        FoldUpApp.getApplication().show(logViewer);
+    }//GEN-LAST:event_viewLogMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel basePathLabel;
@@ -303,6 +327,7 @@ public class FoldUpView extends FrameView {
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JTextPane structTextPane;
+    private javax.swing.JButton viewLog;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
@@ -312,4 +337,5 @@ public class FoldUpView extends FrameView {
     private int busyIconIndex = 0;
 
     private JDialog aboutBox;
+    private JDialog logViewer;
 }

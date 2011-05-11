@@ -1,5 +1,7 @@
 package foldup;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.regex.Matcher;
 
 /**
@@ -34,8 +36,18 @@ public class fileHandler {
          }
          return status;
      }
+     public static void logAction(String action) throws IOException {
+         File f = new File("log.txt");
+         FileOutputStream stream = new FileOutputStream(f);
+         
+         stream.write(action.getBytes());
+         stream.flush();
+         stream.close();
+     }
      
      private static String fileCheck(String path) {
+         
+         
          return path;
      }
 
